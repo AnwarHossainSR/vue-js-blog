@@ -1,9 +1,9 @@
 .PHONY: run
 run:
-	npm run dev
+	yarn run dev
 
 .PHONY: lint
 lint:
-	npm run lint
-	npm run format
+	yarn run lint
+	yarn run format
 

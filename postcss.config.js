@@ -1,6 +1,6 @@
-export default {
+export default async () => ({
   plugins: {
     tailwindcss: {},
-    autoprefixer: {},
-  },
-}
+    autoprefixer: {}
+  }
+})

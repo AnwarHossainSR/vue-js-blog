@@ -1,0 +1,17 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+@layer base {
+  @import './base.scss';
+}
+
+@layer components {
+  @import './components.scss';
+  @import './navigation.scss';
+  @import './buttons.scss';
+}
+
+@layer utilities {
+  @import './utilities.scss';
+}
