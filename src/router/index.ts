@@ -20,6 +20,16 @@ const router = createRouter({
       path: '/contact',
       name: 'contact',
       component: ContactView
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: ContactView
+    },
+    {
+      path: '/sign-up',
+      name: 'sign-up',
+      component: ContactView
     }
   ]
 })

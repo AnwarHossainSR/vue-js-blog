@@ -1,5 +1,9 @@
 <script setup lang="ts">
 import imageUrl from '@/assets/images/logo.svg'
+import { RouterLink, useRoute } from 'vue-router'
+const route = useRoute()
+
+const isActive = (to: string): boolean => route.path === to
 </script>
 
 <template>
@@ -7,9 +11,7 @@ import imageUrl from '@/assets/images/logo.svg'
     <nav class="navbar container">
       <!-- logo -->
       <div class="order-0">
-        <a href="index.html">
-          <img :src="imageUrl" height="30" width="147" alt="logo" />
-        </a>
+        <RouterLink to="/"><img :src="imageUrl" height="30" width="147" alt="logo" /></RouterLink>
       </div>
       <!-- navbar toggler -->
       <input id="nav-toggle" type="checkbox" class="hidden" />
@@ -42,20 +44,26 @@ import imageUrl from '@/assets/images/logo.svg'
         class="navbar-nav order-2 hidden w-full flex-[0_0_100%] lg:order-1 lg:flex lg:w-auto lg:flex-auto lg:justify-center lg:space-x-5"
       >
         <li class="nav-item">
-          <a href="" class="nav-link active">Home</a>
+          <RouterLink class="nav-link active" to="/">Home</RouterLink>
         </li>
         <li class="nav-item">
-          <a href="about.html" class="nav-link">About</a>
+          <RouterLink class="nav-link" to="/" :class="{ active: isActive('/') }">About</RouterLink>
         </li>
         <li class="nav-item">
-          <a href="contact.html" class="nav-link">Contact</a>
+          <RouterLink class="nav-link" to="/contact" :class="{ active: isActive('/contact') }"
+            >Contact</RouterLink
+          >
         </li>
         <li class="nav-item mt-3.5 lg:hidden">
-          <a class="btn btn-white btn-sm border-border" href="signin.html">Sing Up Now</a>
+          <RouterLink class="btn btn-white btn-sm border-border" to="/sign-up"
+            >Sing Up Now</RouterLink
+          >
         </li>
       </ul>
       <div class="order-1 ml-auto hidden items-center md:order-2 md:ml-0 lg:flex">
-        <a class="btn btn-white btn-sm" href="fdgfdg.html">Sing Up Now</a>
+        <RouterLink class="btn btn-white btn-sm border-border" to="/sign-up"
+          >Sing Up Now</RouterLink
+        >
       </div>
     </nav>
   </header>
