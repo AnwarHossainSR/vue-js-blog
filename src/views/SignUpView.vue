@@ -53,7 +53,7 @@ import { RouterLink } from 'vue-router'
                 <p class="mt-6 text-center">
                   Already have an account? <RouterLink class="text-dark" to="/login">Sign in</RouterLink>
                 </p>
-                
+
               </div>
             </div>
           </div>
