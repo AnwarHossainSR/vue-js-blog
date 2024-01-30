@@ -24,8 +24,7 @@ if (theme.fonts.font_family.secondary) {
 
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx,css,scss}'],
-  darkMode: 'media', // or 'media' or 'class'
+  content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
   theme: {
     screens: {
       sm: '540px',
