@@ -19,5 +19,5 @@ module.exports = {
       }
     }
   ],
-  rules: { 'vue/multi-word-component-names': 0, 'scss.lint.unknownAtRules': 'ignore' }
+  rules: { 'vue/multi-word-component-names': 0, 'scss.lint.unknownAtRules': 0 }
 }
