@@ -1,4 +1,7 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { RouterLink } from 'vue-router'
+
+</script>
 
 <template>
   <main>
@@ -46,6 +49,12 @@
                 </div>
                 <input class="btn btn-primary mt-10 block w-full" type="submit" value="Sign Up" />
               </form>
+              <div class="py-2">
+                <p class="mt-6 text-center">
+                  Already have an account? <RouterLink class="text-dark" to="/login">Sign in</RouterLink>
+                </p>
+                
+              </div>
             </div>
           </div>
 
