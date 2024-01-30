@@ -44,10 +44,12 @@ const isActive = (to: string): boolean => route.path === to
         class="navbar-nav order-2 hidden w-full flex-[0_0_100%] lg:order-1 lg:flex lg:w-auto lg:flex-auto lg:justify-center lg:space-x-5"
       >
         <li class="nav-item">
-          <RouterLink class="nav-link active" to="/">Home</RouterLink>
+          <RouterLink class="nav-link" to="/" :class="{ active: isActive('/') }">Home</RouterLink>
         </li>
         <li class="nav-item">
-          <RouterLink class="nav-link" to="/" :class="{ active: isActive('/') }">About</RouterLink>
+          <RouterLink class="nav-link" to="/about" :class="{ active: isActive('/about') }"
+            >About</RouterLink
+          >
         </li>
         <li class="nav-item">
           <RouterLink class="nav-link" to="/contact" :class="{ active: isActive('/contact') }"
