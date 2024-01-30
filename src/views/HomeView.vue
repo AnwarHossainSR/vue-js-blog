@@ -1,4 +1,6 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { RouterLink } from 'vue-router'
+</script>
 
 <template>
   <main>
@@ -39,13 +41,22 @@
         <div class="featured-posts row">
           <div class="mb-8 md:col-6">
             <div class="card">
-              <img class="card-img" width="235" height="304" src="/images/posts/post-1.png" alt="" />
+              <img
+                class="card-img"
+                width="235"
+                height="304"
+                src="/images/posts/post-1.png"
+                alt=""
+              />
               <div class="card-content">
                 <div class="card-tags">
                   <a class="tag" href="#">Development</a>
                 </div>
                 <h3 class="h4 card-title">
-                  <a href="blog-single.html">The Ultimate Guide to Google My Business</a>
+                  <RouterLink
+                    :to="{ name: 'blog-details', params: { blogId: 'yourDynamicBlogId' } }"
+                    >The Ultimate Guide to Google My Business</RouterLink
+                  >
                 </h3>
                 <p>Mauris blandit aliquet elit, eget tincidunt nibh dolor sit amet,</p>
                 <div class="card-footer mt-6 flex space-x-4">
@@ -87,13 +98,23 @@
           </div>
           <div class="mb-8 md:col-6">
             <div class="card">
-              <img class="card-img" width="235" height="304" src="/images/posts/post-2.png" alt="" />
+              <img
+                class="card-img"
+                width="235"
+                height="304"
+                src="/images/posts/post-2.png"
+                alt=""
+              />
               <div class="card-content">
                 <div class="card-tags">
                   <a class="tag" href="#">Development</a>
                 </div>
                 <h3 class="h4 card-title">
-                  <a href="blog-single.html"> The Ultimate Guide to Redirects Explained </a>
+                  <RouterLink
+                    :to="{ name: 'blog-details', params: { blogId: 'yourDynamicBlogId' } }"
+                  >
+                    The Ultimate Guide to Redirects Explained
+                  </RouterLink>
                 </h3>
                 <p>Mauris blandit aliquet elit, eget tincidunt nibh dolor sit amet,</p>
                 <div class="card-footer mt-6 flex space-x-4">
@@ -135,13 +156,23 @@
           </div>
           <div class="mb-8 md:col-6">
             <div class="card">
-              <img class="card-img" width="235" height="304" src="/images/posts/post-3.png" alt="" />
+              <img
+                class="card-img"
+                width="235"
+                height="304"
+                src="/images/posts/post-3.png"
+                alt=""
+              />
               <div class="card-content">
                 <div class="card-tags">
                   <a class="tag" href="#">Development</a>
                 </div>
                 <h3 class="h4 card-title">
-                  <a href="blog-single.html"> 6 Product Launch theif Email Example </a>
+                  <RouterLink
+                    :to="{ name: 'blog-details', params: { blogId: 'yourDynamicBlogId' } }"
+                  >
+                    6 Product Launch theif Email Example
+                  </RouterLink>
                 </h3>
                 <p>Mauris blandit aliquet elit, eget tincidunt nibh dolor sit amet,</p>
                 <div class="card-footer mt-6 flex space-x-4">
@@ -183,13 +214,23 @@
           </div>
           <div class="mb-8 md:col-6">
             <div class="card">
-              <img class="card-img" width="235" height="304" src="/images/posts/post-4.png" alt="" />
+              <img
+                class="card-img"
+                width="235"
+                height="304"
+                src="/images/posts/post-4.png"
+                alt=""
+              />
               <div class="card-content">
                 <div class="card-tags">
                   <a class="tag" href="#">Development</a>
                 </div>
                 <h3 class="h4 card-title">
-                  <a href="blog-single.html"> Keep on Top of your With Felix's Slick New </a>
+                  <RouterLink
+                    :to="{ name: 'blog-details', params: { blogId: 'yourDynamicBlogId' } }"
+                  >
+                    Keep on Top of your With Felix's Slick New
+                  </RouterLink>
                 </h3>
                 <p>Mauris blandit aliquet elit, eget tincidunt nibh dolor sit amet,</p>
                 <div class="card-footer mt-6 flex space-x-4">
@@ -253,15 +294,23 @@
         <div class="row">
           <div class="mb-8 md:col-6 lg:col-4">
             <div class="card">
-              <img class="card-img" width="335" height="210" src="/images/posts/post-5.png" alt="" />
+              <img
+                class="card-img"
+                width="335"
+                height="210"
+                src="/images/posts/post-5.png"
+                alt=""
+              />
               <div class="card-content">
                 <div class="card-tags">
                   <a class="tag" href="#">Development</a>
                 </div>
                 <h3 class="h4 card-title">
-                  <a href="blog-single.html">
+                  <RouterLink
+                    :to="{ name: 'blog-details', params: { blogId: 'yourDynamicBlogId' } }"
+                  >
                     How Video Analytics Can Help Understand and Increase
-                  </a>
+                  </RouterLink>
                 </h3>
                 <p>Mauris blandit aliquet elit, eget tincidunt nibh dolor sit amet,</p>
                 <div class="card-footer mt-6 flex space-x-4">
@@ -303,15 +352,23 @@
           </div>
           <div class="mb-8 md:col-6 lg:col-4">
             <div class="card">
-              <img class="card-img" width="335" height="210" src="/images/posts/post-6.png" alt="" />
+              <img
+                class="card-img"
+                width="335"
+                height="210"
+                src="/images/posts/post-6.png"
+                alt=""
+              />
               <div class="card-content">
                 <div class="card-tags">
                   <a class="tag" href="#">Development</a>
                 </div>
                 <h3 class="h4 card-title">
-                  <a href="blog-single.html">
+                  <RouterLink
+                    :to="{ name: 'blog-details', params: { blogId: 'yourDynamicBlogId' } }"
+                  >
                     Keep on Top of your To-Do List With Slick New Comment
-                  </a>
+                  </RouterLink>
                 </h3>
                 <p>Mauris blandit aliquet elit, eget tincidunt nibh dolor sit amet,</p>
                 <div class="card-footer mt-6 flex space-x-4">
@@ -353,15 +410,23 @@
           </div>
           <div class="mb-8 md:col-6 lg:col-4">
             <div class="card">
-              <img class="card-img" width="335" height="210" src="/images/posts/post-7.png" alt="" />
+              <img
+                class="card-img"
+                width="335"
+                height="210"
+                src="/images/posts/post-7.png"
+                alt=""
+              />
               <div class="card-content">
                 <div class="card-tags">
                   <a class="tag" href="#">Development</a>
                 </div>
                 <h3 class="h4 card-title">
-                  <a href="blog-single.html">
+                  <RouterLink
+                    :to="{ name: 'blog-details', params: { blogId: 'yourDynamicBlogId' } }"
+                  >
                     6 Product Launch Email Examples You’ll Want to Steal
-                  </a>
+                  </RouterLink>
                 </h3>
                 <p>Mauris blandit aliquet elit, eget tincidunt nibh dolor sit amet,</p>
                 <div class="card-footer mt-6 flex space-x-4">
@@ -403,15 +468,23 @@
           </div>
           <div class="mb-8 md:col-6 lg:col-4">
             <div class="card">
-              <img class="card-img" width="335" height="210" src="/images/posts/post-8.png" alt="" />
+              <img
+                class="card-img"
+                width="335"
+                height="210"
+                src="/images/posts/post-8.png"
+                alt=""
+              />
               <div class="card-content">
                 <div class="card-tags">
                   <a class="tag" href="#">Development</a>
                 </div>
                 <h3 class="h4 card-title">
-                  <a href="blog-single.html">
+                  <RouterLink
+                    :to="{ name: 'blog-details', params: { blogId: 'yourDynamicBlogId' } }"
+                  >
                     Learn from the Best: 6 of the Top Automotive Email
-                  </a>
+                  </RouterLink>
                 </h3>
                 <p>Mauris blandit aliquet elit, eget tincidunt nibh dolor sit amet,</p>
                 <div class="card-footer mt-6 flex space-x-4">
@@ -453,13 +526,23 @@
           </div>
           <div class="mb-8 md:col-6 lg:col-4">
             <div class="card">
-              <img class="card-img" width="335" height="210" src="/images/posts/post-9.png" alt="" />
+              <img
+                class="card-img"
+                width="335"
+                height="210"
+                src="/images/posts/post-9.png"
+                alt=""
+              />
               <div class="card-content">
                 <div class="card-tags">
                   <a class="tag" href="#">Development</a>
                 </div>
                 <h3 class="h4 card-title">
-                  <a href="blog-single.html"> 8 E-Commerce Email Marketing Best Practices To </a>
+                  <RouterLink
+                    :to="{ name: 'blog-details', params: { blogId: 'yourDynamicBlogId' } }"
+                  >
+                    8 E-Commerce Email Marketing Best Practices To
+                  </RouterLink>
                 </h3>
                 <p>Mauris blandit aliquet elit, eget tincidunt nibh dolor sit amet,</p>
                 <div class="card-footer mt-6 flex space-x-4">
@@ -513,9 +596,11 @@
                   <a class="tag" href="#">Development</a>
                 </div>
                 <h3 class="h4 card-title">
-                  <a href="blog-single.html">
+                  <RouterLink
+                    :to="{ name: 'blog-details', params: { blogId: 'yourDynamicBlogId' } }"
+                  >
                     Learn from These 6 Travel Boost Leads by 162 Percent
-                  </a>
+                  </RouterLink>
                 </h3>
                 <p>Mauris blandit aliquet elit, eget tincidunt nibh dolor sit amet,</p>
                 <div class="card-footer mt-6 flex space-x-4">
@@ -569,9 +654,11 @@
                   <a class="tag" href="#">Development</a>
                 </div>
                 <h3 class="h4 card-title">
-                  <a href="blog-single.html">
+                  <RouterLink
+                    :to="{ name: 'blog-details', params: { blogId: 'yourDynamicBlogId' } }"
+                  >
                     How Video Analytics Can Help Understand and Increase
-                  </a>
+                  </RouterLink>
                 </h3>
                 <p>Mauris blandit aliquet elit, eget tincidunt nibh dolor sit amet,</p>
                 <div class="card-footer mt-6 flex space-x-4">
@@ -625,9 +712,11 @@
                   <a class="tag" href="#">Development</a>
                 </div>
                 <h3 class="h4 card-title">
-                  <a href="blog-single.html">
+                  <RouterLink
+                    :to="{ name: 'blog-details', params: { blogId: 'yourDynamicBlogId' } }"
+                  >
                     Keep on Top of your To-Do List With Slick New Comment
-                  </a>
+                  </RouterLink>
                 </h3>
                 <p>Mauris blandit aliquet elit, eget tincidunt nibh dolor sit amet,</p>
                 <div class="card-footer mt-6 flex space-x-4">
@@ -681,9 +770,11 @@
                   <a class="tag" href="#">Development</a>
                 </div>
                 <h3 class="h4 card-title">
-                  <a href="blog-single.html">
+                  <RouterLink
+                    :to="{ name: 'blog-details', params: { blogId: 'yourDynamicBlogId' } }"
+                  >
                     6 Product Launch Email Examples You’ll Want to Steal
-                  </a>
+                  </RouterLink>
                 </h3>
                 <p>Mauris blandit aliquet elit, eget tincidunt nibh dolor sit amet,</p>
                 <div class="card-footer mt-6 flex space-x-4">
