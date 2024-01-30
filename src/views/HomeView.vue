@@ -110,7 +110,11 @@ import { RouterLink } from 'vue-router'
                   <a class="tag" href="#">Development</a>
                 </div>
                 <h3 class="h4 card-title">
-                  <a href="blog-single.html"> The Ultimate Guide to Redirects Explained </a>
+                  <RouterLink
+                    :to="{ name: 'blog-details', params: { blogId: 'yourDynamicBlogId' } }"
+                  >
+                    The Ultimate Guide to Redirects Explained
+                  </RouterLink>
                 </h3>
                 <p>Mauris blandit aliquet elit, eget tincidunt nibh dolor sit amet,</p>
                 <div class="card-footer mt-6 flex space-x-4">
@@ -164,7 +168,11 @@ import { RouterLink } from 'vue-router'
                   <a class="tag" href="#">Development</a>
                 </div>
                 <h3 class="h4 card-title">
-                  <a href="blog-single.html"> 6 Product Launch theif Email Example </a>
+                  <RouterLink
+                    :to="{ name: 'blog-details', params: { blogId: 'yourDynamicBlogId' } }"
+                  >
+                    6 Product Launch theif Email Example
+                  </RouterLink>
                 </h3>
                 <p>Mauris blandit aliquet elit, eget tincidunt nibh dolor sit amet,</p>
                 <div class="card-footer mt-6 flex space-x-4">
@@ -218,7 +226,11 @@ import { RouterLink } from 'vue-router'
                   <a class="tag" href="#">Development</a>
                 </div>
                 <h3 class="h4 card-title">
-                  <a href="blog-single.html"> Keep on Top of your With Felix's Slick New </a>
+                  <RouterLink
+                    :to="{ name: 'blog-details', params: { blogId: 'yourDynamicBlogId' } }"
+                  >
+                    Keep on Top of your With Felix's Slick New
+                  </RouterLink>
                 </h3>
                 <p>Mauris blandit aliquet elit, eget tincidunt nibh dolor sit amet,</p>
                 <div class="card-footer mt-6 flex space-x-4">
@@ -294,9 +306,11 @@ import { RouterLink } from 'vue-router'
                   <a class="tag" href="#">Development</a>
                 </div>
                 <h3 class="h4 card-title">
-                  <a href="blog-single.html">
+                  <RouterLink
+                    :to="{ name: 'blog-details', params: { blogId: 'yourDynamicBlogId' } }"
+                  >
                     How Video Analytics Can Help Understand and Increase
-                  </a>
+                  </RouterLink>
                 </h3>
                 <p>Mauris blandit aliquet elit, eget tincidunt nibh dolor sit amet,</p>
                 <div class="card-footer mt-6 flex space-x-4">
@@ -350,9 +364,11 @@ import { RouterLink } from 'vue-router'
                   <a class="tag" href="#">Development</a>
                 </div>
                 <h3 class="h4 card-title">
-                  <a href="blog-single.html">
+                  <RouterLink
+                    :to="{ name: 'blog-details', params: { blogId: 'yourDynamicBlogId' } }"
+                  >
                     Keep on Top of your To-Do List With Slick New Comment
-                  </a>
+                  </RouterLink>
                 </h3>
                 <p>Mauris blandit aliquet elit, eget tincidunt nibh dolor sit amet,</p>
                 <div class="card-footer mt-6 flex space-x-4">
@@ -406,9 +422,11 @@ import { RouterLink } from 'vue-router'
                   <a class="tag" href="#">Development</a>
                 </div>
                 <h3 class="h4 card-title">
-                  <a href="blog-single.html">
+                  <RouterLink
+                    :to="{ name: 'blog-details', params: { blogId: 'yourDynamicBlogId' } }"
+                  >
                     6 Product Launch Email Examples You’ll Want to Steal
-                  </a>
+                  </RouterLink>
                 </h3>
                 <p>Mauris blandit aliquet elit, eget tincidunt nibh dolor sit amet,</p>
                 <div class="card-footer mt-6 flex space-x-4">
@@ -462,9 +480,11 @@ import { RouterLink } from 'vue-router'
                   <a class="tag" href="#">Development</a>
                 </div>
                 <h3 class="h4 card-title">
-                  <a href="blog-single.html">
+                  <RouterLink
+                    :to="{ name: 'blog-details', params: { blogId: 'yourDynamicBlogId' } }"
+                  >
                     Learn from the Best: 6 of the Top Automotive Email
-                  </a>
+                  </RouterLink>
                 </h3>
                 <p>Mauris blandit aliquet elit, eget tincidunt nibh dolor sit amet,</p>
                 <div class="card-footer mt-6 flex space-x-4">
@@ -518,7 +538,11 @@ import { RouterLink } from 'vue-router'
                   <a class="tag" href="#">Development</a>
                 </div>
                 <h3 class="h4 card-title">
-                  <a href="blog-single.html"> 8 E-Commerce Email Marketing Best Practices To </a>
+                  <RouterLink
+                    :to="{ name: 'blog-details', params: { blogId: 'yourDynamicBlogId' } }"
+                  >
+                    8 E-Commerce Email Marketing Best Practices To
+                  </RouterLink>
                 </h3>
                 <p>Mauris blandit aliquet elit, eget tincidunt nibh dolor sit amet,</p>
                 <div class="card-footer mt-6 flex space-x-4">
@@ -572,9 +596,11 @@ import { RouterLink } from 'vue-router'
                   <a class="tag" href="#">Development</a>
                 </div>
                 <h3 class="h4 card-title">
-                  <a href="blog-single.html">
+                  <RouterLink
+                    :to="{ name: 'blog-details', params: { blogId: 'yourDynamicBlogId' } }"
+                  >
                     Learn from These 6 Travel Boost Leads by 162 Percent
-                  </a>
+                  </RouterLink>
                 </h3>
                 <p>Mauris blandit aliquet elit, eget tincidunt nibh dolor sit amet,</p>
                 <div class="card-footer mt-6 flex space-x-4">
@@ -628,9 +654,11 @@ import { RouterLink } from 'vue-router'
                   <a class="tag" href="#">Development</a>
                 </div>
                 <h3 class="h4 card-title">
-                  <a href="blog-single.html">
+                  <RouterLink
+                    :to="{ name: 'blog-details', params: { blogId: 'yourDynamicBlogId' } }"
+                  >
                     How Video Analytics Can Help Understand and Increase
-                  </a>
+                  </RouterLink>
                 </h3>
                 <p>Mauris blandit aliquet elit, eget tincidunt nibh dolor sit amet,</p>
                 <div class="card-footer mt-6 flex space-x-4">
@@ -684,9 +712,11 @@ import { RouterLink } from 'vue-router'
                   <a class="tag" href="#">Development</a>
                 </div>
                 <h3 class="h4 card-title">
-                  <a href="blog-single.html">
+                  <RouterLink
+                    :to="{ name: 'blog-details', params: { blogId: 'yourDynamicBlogId' } }"
+                  >
                     Keep on Top of your To-Do List With Slick New Comment
-                  </a>
+                  </RouterLink>
                 </h3>
                 <p>Mauris blandit aliquet elit, eget tincidunt nibh dolor sit amet,</p>
                 <div class="card-footer mt-6 flex space-x-4">
@@ -740,9 +770,11 @@ import { RouterLink } from 'vue-router'
                   <a class="tag" href="#">Development</a>
                 </div>
                 <h3 class="h4 card-title">
-                  <a href="blog-single.html">
+                  <RouterLink
+                    :to="{ name: 'blog-details', params: { blogId: 'yourDynamicBlogId' } }"
+                  >
                     6 Product Launch Email Examples You’ll Want to Steal
-                  </a>
+                  </RouterLink>
                 </h3>
                 <p>Mauris blandit aliquet elit, eget tincidunt nibh dolor sit amet,</p>
                 <div class="card-footer mt-6 flex space-x-4">
