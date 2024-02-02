@@ -1,5 +1,30 @@
 <script setup lang="ts">
+import { onMounted, ref } from 'vue'
 import { RouterLink } from 'vue-router'
+import { useStore } from 'vuex'
+
+const store = useStore()
+
+interface Category {
+  id: number
+  title: string
+}
+
+const categories = ref<Category[]>([])
+const posts = ref([])
+const activeCategory = ref('All Categories')
+
+onMounted(async () => {
+  await store.dispatch('fetchCategories')
+  await store.dispatch('fetchPosts')
+  categories.value = store.state.categories.data
+  posts.value = store.state.posts.data
+})
+
+const setActiveCategory = (categoryName: string) => {
+  activeCategory.value = categoryName
+  // You can add logic here to filter posts based on the selected category if needed
+}
 </script>
 
 <template>
@@ -274,6 +299,30 @@ import { RouterLink } from 'vue-router'
         <div class="category-filter mb-10 mt-3 rounded-xl bg-[#EEEEEE] px-4">
           <ul class="filter-list">
             <li>
+              <a
+                :class="{
+                  'filter-btn btn btn-sm': true,
+                  'filter-btn-active': activeCategory === 'All Categories'
+                }"
+                @click="setActiveCategory('All Categories')"
+                >All Categories</a
+              >
+            </li>
+            <li v-for="category in categories" :key="category.id">
+              <a
+                :class="{
+                  'filter-btn btn btn-sm': true,
+                  'filter-btn-active': activeCategory === category.title
+                }"
+                @click="setActiveCategory(category.title)"
+                >{{ category.title }}</a
+              >
+            </li>
+          </ul>
+        </div>
+        <!-- <div class="category-filter mb-10 mt-3 rounded-xl bg-[#EEEEEE] px-4">
+          <ul class="filter-list">
+            <li>
               <a class="filter-btn filter-btn-active btn btn-sm" href="#">All Categories</a>
             </li>
             <li>
@@ -289,7 +338,7 @@ import { RouterLink } from 'vue-router'
               <a class="filter-btn btn btn-sm" href="#">Rate Optimization</a>
             </li>
           </ul>
-        </div>
+        </div> -->
         <h2 class="h4 mb-4">Featured Posts</h2>
         <div class="row">
           <div class="mb-8 md:col-6 lg:col-4">

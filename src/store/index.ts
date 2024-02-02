@@ -1,5 +1,7 @@
-import * as api from '@/services/api'
 import { createStore } from 'vuex'
+
+// src/store/index.js
+import { useCategoriesApi, usePostsApi } from '@/composables/useApi'
 
 export default createStore({
   state: {
@@ -16,14 +18,14 @@ export default createStore({
   },
   actions: {
     async fetchCategories({ commit }) {
-      // Perform an API request to fetch categories
-      const categories = await api.fetchCategories()
-      commit('setCategories', categories)
+      const { categories, fetchCategories } = useCategoriesApi()
+      await fetchCategories()
+      commit('setCategories', categories.value)
     },
     async fetchPosts({ commit }) {
-      // Perform an API request to fetch blogs
-      const posts = await api.fetchBlogs()
-      commit('setPosts', posts)
+      const { posts, fetchPosts } = usePostsApi()
+      await fetchPosts()
+      commit('setPosts', posts.value)
     }
   },
   getters: {
