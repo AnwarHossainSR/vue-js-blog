@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import CategoryFilter from '@/components/categories/CategoryFilter.vue'
 import PostCard from '@/components/posts/PostCard.vue'
 import { onMounted, ref } from 'vue'
 import { RouterLink } from 'vue-router'
@@ -32,9 +33,9 @@ onMounted(async () => {
   posts.value = store.state.posts.data
 })
 
-const setActiveCategory = (categoryName: string) => {
-  activeCategory.value = categoryName
-}
+const updateActiveCategory = (categoryName: string) => {
+  activeCategory.value = categoryName;
+};
 </script>
 
 <template>
@@ -309,26 +310,13 @@ const setActiveCategory = (categoryName: string) => {
         <!-- category -->
         <div class="category-filter mb-10 mt-3 rounded-xl bg-[#EEEEEE] px-4">
           <ul class="filter-list">
-            <li>
-              <a
-                :class="{
-                  'filter-btn btn btn-sm': true,
-                  'filter-btn-active': activeCategory === 'All Categories'
-                }"
-                @click="setActiveCategory('All Categories')"
-                >All Categories</a
-              >
-            </li>
-            <li v-for="category in categories" :key="category.id">
-              <a
-                :class="{
-                  'filter-btn btn btn-sm': true,
-                  'filter-btn-active': activeCategory === category.title
-                }"
-                @click="setActiveCategory(category.title)"
-                >{{ category.title }}</a
-              >
-            </li>
+            <!-- category -->
+            <CategoryFilter
+              :categories="categories"
+              :activeCategory="activeCategory"
+              @updateActiveCategory="updateActiveCategory"
+            />
+            <!-- end category -->
           </ul>
         </div>
         <!-- end category -->
