@@ -9,9 +9,20 @@ interface Category {
   id: number
   title: string
 }
+interface Post {
+  id: number
+  title: string
+  image_path: any
+  category: {
+    id: number
+    title: string
+  }
+  body: string
+  createdAt: string
+}
 
 const categories = ref<Category[]>([])
-const posts = ref([])
+const posts = ref<Post[]>([])
 const activeCategory = ref('All Categories')
 
 onMounted(async () => {
@@ -23,7 +34,11 @@ onMounted(async () => {
 
 const setActiveCategory = (categoryName: string) => {
   activeCategory.value = categoryName
-  // You can add logic here to filter posts based on the selected category if needed
+}
+
+const getSubBody = (fullBody: string) => {
+  const subBodyLength = 150
+  return fullBody.slice(0, subBodyLength)
 }
 </script>
 
@@ -296,6 +311,7 @@ const setActiveCategory = (categoryName: string) => {
             </div>
           </div>
         </div>
+        <!-- category -->
         <div class="category-filter mb-10 mt-3 rounded-xl bg-[#EEEEEE] px-4">
           <ul class="filter-list">
             <li>
@@ -320,48 +336,29 @@ const setActiveCategory = (categoryName: string) => {
             </li>
           </ul>
         </div>
-        <!-- <div class="category-filter mb-10 mt-3 rounded-xl bg-[#EEEEEE] px-4">
-          <ul class="filter-list">
-            <li>
-              <a class="filter-btn filter-btn-active btn btn-sm" href="#">All Categories</a>
-            </li>
-            <li>
-              <a class="filter-btn btn btn-sm" href="#">Development</a>
-            </li>
-            <li>
-              <a class="filter-btn btn btn-sm" href="#">Updates</a>
-            </li>
-            <li>
-              <a class="filter-btn btn btn-sm" href="#">Email Marketing</a>
-            </li>
-            <li>
-              <a class="filter-btn btn btn-sm" href="#">Rate Optimization</a>
-            </li>
-          </ul>
-        </div> -->
-        <h2 class="h4 mb-4">Featured Posts</h2>
+        <!-- end category -->
+        <!-- posts -->
         <div class="row">
-          <div class="mb-8 md:col-6 lg:col-4">
+          <div class="mb-8 md:col-6 lg:col-4" v-for="post in posts" :key="post.id">
             <div class="card">
               <img
                 class="card-img"
                 width="335"
                 height="210"
-                src="/images/posts/post-5.png"
-                alt=""
+                src="https://via.placeholder.com/640x480.png/006644?text=qui"
+                alt="rtyry"
               />
               <div class="card-content">
                 <div class="card-tags">
-                  <a class="tag" href="#">Development</a>
+                  <a class="tag" href="#">{{ post.category.title }}</a>
+                  <!-- Replace with the actual property name for the category -->
                 </div>
                 <h3 class="h4 card-title">
-                  <RouterLink
-                    :to="{ name: 'blog-details', params: { blogId: 'yourDynamicBlogId' } }"
-                  >
-                    How Video Analytics Can Help Understand and Increase
+                  <RouterLink :to="{ name: 'blog-details', params: { blogId: post.id } }">
+                    {{ post.title }}
                   </RouterLink>
                 </h3>
-                <p>Mauris blandit aliquet elit, eget tincidunt nibh dolor sit amet,</p>
+                <p>{{ getSubBody(post.body) }}</p>
                 <div class="card-footer mt-6 flex space-x-4">
                   <span class="inline-flex items-center text-xs text-[#666]">
                     <svg
@@ -377,7 +374,7 @@ const setActiveCategory = (categoryName: string) => {
                         fill="#939393"
                       />
                     </svg>
-                    21st Sep,2020
+                    {{ post.createdAt }}
                   </span>
                   <span class="inline-flex items-center text-xs text-[#666]">
                     <svg
@@ -399,7 +396,8 @@ const setActiveCategory = (categoryName: string) => {
               </div>
             </div>
           </div>
-          <div class="mb-8 md:col-6 lg:col-4">
+
+          <!-- <div class="mb-8 md:col-6 lg:col-4">
             <div class="card">
               <img
                 class="card-img"
@@ -862,8 +860,9 @@ const setActiveCategory = (categoryName: string) => {
                 </div>
               </div>
             </div>
-          </div>
+          </div> -->
         </div>
+        <!-- end posts -->
       </div>
     </section>
   </main>
