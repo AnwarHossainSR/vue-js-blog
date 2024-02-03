@@ -25,7 +25,7 @@ const getSubBody = (fullBody: string): string => {
           <a class="tag" :href="categoryLink">{{ post.category.title }}</a>
         </div>
         <h3 class="h4 card-title">
-          <RouterLink :to="{ name: 'blog-details', params: { blogId: post.id } }">
+          <RouterLink :to="{ name: 'blog-details', params: { slug: post.slug } }">
             {{ post.title }}
           </RouterLink>
         </h3>

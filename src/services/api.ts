@@ -25,3 +25,13 @@ export const fetchBlogs = async () => {
     throw error
   }
 }
+
+export const fetchSinglePost = async (slug: string) => {
+  try {
+    const response = await api.get(`/posts/${slug}`)
+    return response.data
+  } catch (error) {
+    console.error('Error fetching single post:', error)
+    throw error
+  }
+}

@@ -31,3 +31,18 @@ export const usePostsApi = () => {
 
   return { posts, fetchPosts }
 }
+
+export const useSinglePostAPI = (slug: string) => {
+  const singlePost = ref({})
+
+  const fetchSinglePost = async () => {
+    try {
+      const data = await api.fetchSinglePost(slug)      
+      singlePost.value = data.result
+    } catch (error) {
+      console.error('Error fetching single post:', error)
+    }
+  }
+
+  return { singlePost, fetchSinglePost }
+}
