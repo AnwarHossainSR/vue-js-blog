@@ -1,5 +1,48 @@
 <script setup lang="ts">
+import { validateSignUpForm } from '@/libs/validations/authValidation'
+import { ref } from 'vue'
 import { RouterLink } from 'vue-router'
+import { useStore } from 'vuex'
+
+const store = useStore()
+
+const name = ref('')
+const email = ref('')
+const password = ref('')
+const passwordConfirmation = ref('')
+const errors = ref({
+  name: '',
+  email: '',
+  password: '',
+  passwordConfirmation: ''
+})
+
+const signUp = async () => {
+  try {
+    const validationErrors = validateSignUpForm(
+      name.value,
+      email.value,
+      password.value,
+      passwordConfirmation.value
+    )
+
+    if (Object.values(errors).every((error) => !error)) {
+      const credentials = {
+        fullName: name.value,
+        email: email.value,
+        password: password.value,
+        passwordConfirmation: passwordConfirmation.value
+      }
+      await store.dispatch('auth/register', credentials)
+      // After successful registration, you may want to redirect to a different route
+    } else {
+      // Set the errors to display in the template
+      errors.value = validationErrors
+    }
+  } catch (error) {
+    console.error('Error during registration:', error)
+  }
+}
 </script>
 
 <template>
@@ -23,32 +66,48 @@ import { RouterLink } from 'vue-router'
                 <span class="relative z-[1] inline-block bg-white px-2">Or Sign Up With Email</span>
               </div>
 
-              <form action="#">
+              <form @submit.prevent="signUp">
                 <div class="form-group">
                   <label for="name" class="form-label">Full Name</label>
-                  <input type="text" id="name" class="form-control" placeholder="Your Full Name" />
+                  <input
+                    v-model="name"
+                    type="text"
+                    id="name"
+                    class="form-control"
+                    placeholder="Your Full Name"
+                  />
+                  <div v-if="errors.name" class="text-red-500 text-sm mt-1">{{ errors.name }}</div>
                 </div>
                 <div class="form-group mt-4">
                   <label for="email" class="form-label">Email Adrdess</label>
                   <input
+                    v-model="email"
                     type="email"
                     id="email"
                     class="form-control"
                     placeholder="Your Email Address"
                   />
+                  <div v-if="errors.email" class="text-red-500 text-sm mt-1">
+                    {{ errors.email }}
+                  </div>
                 </div>
                 <div class="form-group mt-4">
                   <label for="password" class="form-label">Password</label>
                   <input
+                    v-model="password"
                     type="password"
                     id="password"
                     class="form-control"
                     placeholder="Your Password"
                   />
+                  <div v-if="errors.password" class="text-red-500 text-sm mt-1">
+                    {{ errors.password }}
+                  </div>
                 </div>
                 <div class="form-group mt-4">
                   <label for="passwordConfirmation" class="form-label">Confirm Password</label>
                   <input
+                    v-model="passwordConfirmation"
                     type="password"
                     id="passwordConfirmation"
                     class="form-control"
@@ -56,6 +115,9 @@ import { RouterLink } from 'vue-router'
                   />
                 </div>
                 <input class="btn btn-primary mt-10 block w-full" type="submit" value="Sign Up" />
+                <div v-if="errors.passwordConfirmation" class="text-red-500 text-sm mt-1">
+                  {{ errors.passwordConfirmation }}
+                </div>
               </form>
               <div class="py-2">
                 <p class="mt-6 text-center">
