@@ -1,9 +1,17 @@
 <script setup lang="ts">
-import imageUrl from '@/assets/images/logo.svg'
-import { RouterLink, useRoute } from 'vue-router'
+import imageUrl from '@/assets/images/logo.svg';
+import { RouterLink, useRoute, useRouter } from 'vue-router';
+import { useStore } from 'vuex';
 const route = useRoute()
+const router = useRouter()
+const store = useStore()
 
 const isActive = (to: string): boolean => route.path === to
+
+const handleLogout = async () => {
+  await store.dispatch('auth/logout')
+  router.push('/')
+}
 </script>
 
 <template>
@@ -56,15 +64,30 @@ const isActive = (to: string): boolean => route.path === to
             >Contact</RouterLink
           >
         </li>
+        <li v-if="store.state.auth.isAuthenticated" class="nav-item">
+          <RouterLink class="nav-link" to="/dashboard" :class="{ active: isActive('/dashboard') }"
+            >Dashboard</RouterLink
+          >
+        </li>
+        <li v-if="store.state.auth.isAuthenticated" class="nav-item">
+          <a class="nav-link cursor-pointer" @click="handleLogout">Logout</a>
+        </li>
         <li class="nav-item mt-3.5 lg:hidden">
-          <RouterLink class="btn btn-white btn-sm border-border" to="/sign-up"
-            >Sing Up Now</RouterLink
+          <RouterLink
+            v-if="!store.state.auth.isAuthenticated"
+            class="btn btn-white btn-sm border-border"
+            to="/sign-up"
+            >Sign Up Now</RouterLink
           >
         </li>
       </ul>
       <div class="order-1 ml-auto hidden items-center md:order-2 md:ml-0 lg:flex">
-        <RouterLink class="btn btn-white btn-sm border-border" to="/sign-up"
-          >Sing Up Now</RouterLink
+        <!-- Conditionally show "Logout" link when authenticated -->
+        <RouterLink
+          v-if="!store.state.auth.isAuthenticated"
+          class="btn btn-white btn-sm border-border"
+          to="/sign-up"
+          >Sign Up Now</RouterLink
         >
       </div>
     </nav>

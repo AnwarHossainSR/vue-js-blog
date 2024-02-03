@@ -9,8 +9,12 @@ import { useStore } from 'vuex'
 const store = useStore()
 
 onMounted(async () => {
-  await store.dispatch('auth/checkAuthentication')
-  axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('token')}`
+  if (!store.state.auth.isAuthenticated) {
+    await store.dispatch('auth/checkAuthentication')
+    if (store.state.auth.isAuthenticated) {
+      axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('token')}`
+    }
+  }
 })
 </script>
 
