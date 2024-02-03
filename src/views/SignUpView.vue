@@ -26,17 +26,21 @@ const signUp = async () => {
       passwordConfirmation.value
     )
 
-    if (Object.values(errors).every((error) => !error)) {
+    if (Object.values(validationErrors).every((error) => !error)) {
       const credentials = {
-        fullName: name.value,
+        name: name.value,
         email: email.value,
         password: password.value,
         passwordConfirmation: passwordConfirmation.value
       }
-      await store.dispatch('auth/register', credentials)
-      // After successful registration, you may want to redirect to a different route
+      await store.dispatch('auth/register', credentials)      
+      if (store.state.auth.isAuthenticated) {
+        name.value = ''
+        email.value = ''
+        password.value = ''
+        passwordConfirmation.value = ''
+      }
     } else {
-      // Set the errors to display in the template
       errors.value = validationErrors
     }
   } catch (error) {
@@ -113,11 +117,38 @@ const signUp = async () => {
                     class="form-control"
                     placeholder="Confirmation"
                   />
+                  <div v-if="errors.passwordConfirmation" class="text-red-500 text-sm mt-1">
+                    {{ errors.passwordConfirmation }}
+                  </div>
+                </div>
+
+                <!-- Display success message -->
+                <div
+                  v-if="store.state.auth.message"
+                  class="bg-green-500 text-white p-4 rounded-md my-4"
+                >
+                  <strong>Success:</strong> {{ store.state.auth.message }}
+                </div>
+                <!-- Display errors -->
+                <div v-if="store.state.auth.errors" class="text-red-500 text-sm mt-4">
+                  <ul>
+                    <li
+                      v-for="(errorMessages, fieldName) in store.state.auth.errors"
+                      :key="fieldName"
+                    >
+                      <ul>
+                        <li
+                          v-for="(message, index) in errorMessages"
+                          :key="index"
+                          class="font-bold"
+                        >
+                          {{ message }}
+                        </li>
+                      </ul>
+                    </li>
+                  </ul>
                 </div>
                 <input class="btn btn-primary mt-10 block w-full" type="submit" value="Sign Up" />
-                <div v-if="errors.passwordConfirmation" class="text-red-500 text-sm mt-1">
-                  {{ errors.passwordConfirmation }}
-                </div>
               </form>
               <div class="py-2">
                 <p class="mt-6 text-center">
