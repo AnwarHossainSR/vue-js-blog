@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { defineProps, watch } from 'vue'
+import { watch } from 'vue'
 
 // Define the props
 const props = defineProps(['categories', 'activeCategory'])
