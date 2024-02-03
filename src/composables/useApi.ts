@@ -69,7 +69,7 @@ export const useAuthApi = () => {
       token.value = data.result.token
       message.value = 'User authenticated successfully!'
     } catch (error: any) {
-      errors.value = error.response.data.errors
+      errors.value = error.response.data.message
     }
   }
 

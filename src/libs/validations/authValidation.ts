@@ -7,6 +7,11 @@ interface SignUpErrors {
   passwordConfirmation: string
 }
 
+interface SignInErrors {
+  email: string
+  password: string
+}
+
 export const validateSignUpForm = (
   name: string,
   email: string,
@@ -38,6 +43,25 @@ export const validateSignUpForm = (
 
   if (password !== passwordConfirmation) {
     errors.passwordConfirmation = 'Passwords do not match'
+  }
+
+  return errors
+}
+
+export const validateSignInForm = (email: string, password: string): SignInErrors => {
+  let errors: SignInErrors = {
+    email: '',
+    password: ''
+  }
+
+  if (!email.trim()) {
+    errors.email = 'Email is required'
+  } else if (!isValidEmail(email)) {
+    errors.email = 'Invalid email address'
+  }
+
+  if (!password) {
+    errors.password = 'Password is required'
   }
 
   return errors
