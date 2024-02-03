@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import CategoryFilter from '@/components/categories/CategoryFilter.vue'
-import PostCard from '@/components/posts/PostCard.vue'
 import FeaturedCard from '@/components/posts/FeaturedPost.vue'
+import PostCard from '@/components/posts/PostCard.vue'
 import { onMounted, ref } from 'vue'
 import { useStore } from 'vuex'
 const store = useStore()
@@ -26,21 +26,28 @@ const categories = ref<Category[]>([])
 const posts = ref<Post[]>([])
 const featuredPosts = ref<Post[]>([])
 const activeCategory = ref('All Categories')
+const isLoading = ref(true)
 
 onMounted(async () => {
-  await store.dispatch('fetchCategories')
-  await store.dispatch('fetchPosts')
-  categories.value = store.state.categories.data
-  posts.value = store.state.posts.data
-  // Get the last 4 posts as featured posts
-  const totalPosts = store.state.posts.data.length;
-  const startIndex = totalPosts >= 4 ? totalPosts - 4 : 0;
-  featuredPosts.value = store.state.posts.data.slice(startIndex, totalPosts);
+  try {
+    await store.dispatch('fetchCategories')
+    await store.dispatch('fetchPosts')
+    categories.value = store.state.categories.data
+    posts.value = store.state.posts.data
+    // Get the last 4 posts as featured posts
+    const totalPosts = store.state.posts.data.length
+    const startIndex = totalPosts >= 4 ? totalPosts - 4 : 0
+    featuredPosts.value = store.state.posts.data.slice(startIndex, totalPosts)
+  } catch (error) {
+    console.error('Error fetching data:', error)
+  } finally {
+    isLoading.value = false
+  }
 })
 
 const updateActiveCategory = (categoryName: string) => {
-  activeCategory.value = categoryName;
-};
+  activeCategory.value = categoryName
+}
 </script>
 
 <template>
@@ -80,7 +87,13 @@ const updateActiveCategory = (categoryName: string) => {
       <div class="container">
         <h2 class="h4 mb-4">Featured Posts</h2>
         <div class="featured-posts row">
-          <FeaturedCard v-for="post in featuredPosts" :key="post.id" :post="post" />   
+          <!-- Show loader while data is being fetched -->
+          <div v-if="isLoading" class="loader-container">
+            <div
+              class="loader ease-linear border-t-4 border-blue-500 border-solid rounded-full h-12 w-12"
+            ></div>
+          </div>
+          <FeaturedCard v-for="post in featuredPosts" :key="post.id" :post="post" />
           <!-- <div class="mb-8 md:col-6">
             <div class="card">
               <img
@@ -271,6 +284,11 @@ const updateActiveCategory = (categoryName: string) => {
         <!-- end category -->
         <!-- posts -->
         <div class="row">
+          <div v-if="isLoading" class="loader-container">
+            <div
+              class="loader ease-linear border-t-4 border-blue-500 border-solid rounded-full h-12 w-12"
+            ></div>
+          </div>
           <PostCard v-for="post in posts" :key="post.id" :post="post" />
         </div>
         <!-- end posts -->
