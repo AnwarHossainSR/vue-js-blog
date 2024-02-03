@@ -20,7 +20,7 @@ const mutations: MutationTree<CategoriesState> = {
 const actions: ActionTree<CategoriesState, any> = {
   async fetchCategories({ commit }) {
     const { categories, fetchCategories } = useCategoriesApi()
-    await fetchCategories()    
+    await fetchCategories()
     commit('setCategories', categories.value)
   }
 }

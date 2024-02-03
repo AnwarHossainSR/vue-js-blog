@@ -28,7 +28,7 @@ onMounted(async () => {
   const slug = route.params.slug
   if (slug) {
     try {
-      await store.dispatch('posts/fetchSinglePost', slug)      
+      await store.dispatch('posts/fetchSinglePost', slug)
       postData.value = store.state.posts.singlePost
     } catch (error) {
       console.error('Error fetching data:', error)
