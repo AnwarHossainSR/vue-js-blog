@@ -34,7 +34,7 @@ const mutations: MutationTree<AuthState> = {
   },
   setToken(state, token) {
     state.token = token
-    localStorage.setItem('token', token)
+    if (token) localStorage.setItem('token', token)
   }
 }
 
@@ -50,7 +50,7 @@ const actions: ActionTree<AuthState, any> = {
       commit('setAuthenticated', true)
       commit('setMessage', message.value)
       commit('setErrors', null)
-      axios.defaults.headers.common['Authorization'] = `Bearer ${token.value}` // Set token in Axios headers
+      if (token.value) axios.defaults.headers.common['Authorization'] = `Bearer ${token.value}`
     } else {
       commit('setUser', null)
       commit('setAuthenticated', false)
@@ -82,9 +82,25 @@ const actions: ActionTree<AuthState, any> = {
       commit('setAuthenticated', false)
       commit('setMessage', message.value)
       commit('setErrors', null)
-      delete axios.defaults.headers.common['Authorization'] // Remove token from Axios headers
+      //delete axios.defaults.headers.common['Authorization'] // Remove token from Axios headers
     } else {
       commit('setMessage', null)
+      commit('setErrors', errors.value)
+    }
+  },
+  async checkAuthentication({ commit }: ActionContext<AuthState, any>) {
+    const { user, whoami, errors, message, token } = useAuthApi()
+    await whoami()
+
+    if (user.value) {
+      commit('setToken', token.value)
+      commit('setUser', user.value)
+      commit('setAuthenticated', true)
+      commit('setMessage', message.value)
+      commit('setErrors', null)
+    } else {
+      commit('setUser', null)
+      commit('setAuthenticated', false)
       commit('setErrors', errors.value)
     }
   }

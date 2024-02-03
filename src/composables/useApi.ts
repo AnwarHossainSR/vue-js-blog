@@ -73,6 +73,16 @@ export const useAuthApi = () => {
     }
   }
 
+  const whoami = async () => {
+    try {
+      const data = await authService.whoami()
+      user.value = data.result
+      message.value = 'User authenticated successfully!'
+    } catch (error: any) {
+      errors.value = error.response.data.message
+    }
+  }
+
   const logout = async () => {
     try {
       await authService.logout()
@@ -83,5 +93,5 @@ export const useAuthApi = () => {
     }
   }
 
-  return { register, user, authenticate, logout, errors, message, token }
+  return { register, user, authenticate, logout, errors, message, token, whoami }
 }

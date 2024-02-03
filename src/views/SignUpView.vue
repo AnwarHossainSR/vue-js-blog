@@ -33,7 +33,7 @@ const signUp = async () => {
         password: password.value,
         passwordConfirmation: passwordConfirmation.value
       }
-      await store.dispatch('auth/register', credentials)      
+      await store.dispatch('auth/register', credentials)
       if (store.state.auth.isAuthenticated) {
         name.value = ''
         email.value = ''
@@ -130,21 +130,22 @@ const signUp = async () => {
                   <strong>Success:</strong> {{ store.state.auth.message }}
                 </div>
                 <!-- Display errors -->
-                <div v-if="store.state.auth.errors" class="text-red-500 text-sm mt-4">
-                  <ul>
+                <div
+                  v-if="store.state.auth.errors != null || store.state.auth.errors != ''"
+                  class="text-red-500 text-sm mt-4"
+                >
+                  <ul v-if="typeof store.state.auth.errors === 'string'">
+                    <!-- If error message is a string, display it directly -->
+                    <li class="font-bold">{{ store.state.auth.errors }}</li>
+                  </ul>
+                  <ul v-else>
+                    <!-- If error message is an array, display each item in the array -->
                     <li
-                      v-for="(errorMessages, fieldName) in store.state.auth.errors"
-                      :key="fieldName"
+                      v-for="(error, index) in store.state.auth.errors"
+                      :key="index"
+                      class="font-bold"
                     >
-                      <ul>
-                        <li
-                          v-for="(message, index) in errorMessages"
-                          :key="index"
-                          class="font-bold"
-                        >
-                          {{ message }}
-                        </li>
-                      </ul>
+                      {{ error }}
                     </li>
                   </ul>
                 </div>
