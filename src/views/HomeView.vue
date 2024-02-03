@@ -30,14 +30,14 @@ const isLoading = ref(true)
 
 onMounted(async () => {
   try {
-    await store.dispatch('fetchCategories')
-    await store.dispatch('fetchPosts')
+    await store.dispatch('categories/fetchCategories')
+    await store.dispatch('posts/fetchPosts')
     categories.value = store.state.categories.data
-    posts.value = store.state.posts.data
+    posts.value = store.state.posts.posts
     // Get the last 4 posts as featured posts
-    const totalPosts = store.state.posts.data.length
+    const totalPosts = posts.value.length
     const startIndex = totalPosts >= 4 ? totalPosts - 4 : 0
-    featuredPosts.value = store.state.posts.data.slice(startIndex, totalPosts)
+    featuredPosts.value = posts.value.slice(startIndex, totalPosts)
   } catch (error) {
     console.error('Error fetching data:', error)
   } finally {

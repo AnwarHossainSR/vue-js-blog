@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router'
-
 </script>
 
 <template>
@@ -47,13 +46,22 @@ import { RouterLink } from 'vue-router'
                     placeholder="Your Password"
                   />
                 </div>
+                <div class="form-group mt-4">
+                  <label for="passwordConfirmation" class="form-label">Confirm Password</label>
+                  <input
+                    type="password"
+                    id="passwordConfirmation"
+                    class="form-control"
+                    placeholder="Confirmation"
+                  />
+                </div>
                 <input class="btn btn-primary mt-10 block w-full" type="submit" value="Sign Up" />
               </form>
               <div class="py-2">
                 <p class="mt-6 text-center">
-                  Already have an account? <RouterLink class="text-dark" to="/login">Sign in</RouterLink>
+                  Already have an account?
+                  <RouterLink class="text-dark" to="/login">Sign in</RouterLink>
                 </p>
-                
               </div>
             </div>
           </div>

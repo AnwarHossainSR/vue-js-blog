@@ -1,14 +1,8 @@
-import axios from 'axios'
-
-const API_BASE_URL = 'http://localhost:8000/api/v1'
-
-const api = axios.create({
-  baseURL: API_BASE_URL
-})
+import { api } from './index'
 
 export const fetchCategories = async () => {
   try {
-    const response = await api.get('/categories')
+    const response = await api.get('/categories')    
     return response.data
   } catch (error) {
     console.error('Error fetching categories:', error)
