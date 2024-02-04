@@ -2,20 +2,20 @@
 import Footer from '@/components/common/Footer.vue'
 import Header from '@/components/common/Header.vue'
 import axios from 'axios'
-import { onMounted } from 'vue'
+import { watch } from 'vue'
 import { RouterView } from 'vue-router'
 import { useStore } from 'vuex'
 
 const store = useStore()
 
-onMounted(async () => {
-  if (!store.state.auth.isAuthenticated) {
-    await store.dispatch('auth/checkAuthentication')
-    if (store.state.auth.isAuthenticated) {
+watch(
+  () => store.state.auth.isAuthenticated,
+  (isAuthenticated) => {
+    if (isAuthenticated && localStorage.getItem('token')) {
       axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('token')}`
     }
   }
-})
+)
 </script>
 
 <template>
