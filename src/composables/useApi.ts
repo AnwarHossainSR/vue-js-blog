@@ -47,22 +47,39 @@ export const usePostsApi = () => {
 // auth API
 export const useAuthApi = () => {
   const user = ref(null)
+  const errors = ref(null)
+  const message = ref('')
+  const token = ref('')
 
   const register = async (credentials: any) => {
     try {
       const data = await authService.register(credentials)
-      user.value = data.result
-    } catch (error) {
-      console.error('Error registering user:', error)
+      user.value = data.result.user
+      token.value = data.result.token
+      message.value = 'User registered successfully!'
+    } catch (error: any) {
+      errors.value = error.response.data.errors
     }
   }
 
   const authenticate = async (credentials: any) => {
     try {
       const data = await authService.login(credentials)
+      user.value = data.result.user
+      token.value = data.result.token
+      message.value = 'User authenticated successfully!'
+    } catch (error: any) {
+      errors.value = error.response.data.message
+    }
+  }
+
+  const whoami = async () => {
+    try {
+      const data = await authService.whoami()
       user.value = data.result
-    } catch (error) {
-      console.error('Error authenticating user:', error)
+      message.value = 'User authenticated successfully!'
+    } catch (error: any) {
+      errors.value = error.response.data.message
     }
   }
 
@@ -70,10 +87,11 @@ export const useAuthApi = () => {
     try {
       await authService.logout()
       user.value = null
-    } catch (error) {
-      console.error('Error logging out user:', error)
+      message.value = 'User logged out successfully!'
+    } catch (error: any) {
+      errors.value = error.response.data.errors
     }
   }
 
-  return { register, user, authenticate, logout }
+  return { register, user, authenticate, logout, errors, message, token, whoami }
 }

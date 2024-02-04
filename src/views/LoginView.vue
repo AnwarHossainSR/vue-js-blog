@@ -1,4 +1,48 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { validateSignInForm } from '@/libs/validations/authValidation'
+import { ref } from 'vue'
+import { RouterLink, useRouter } from 'vue-router'
+import { useToast } from 'vue-toast-notification'
+import 'vue-toast-notification/dist/theme-sugar.css'
+const $toast = useToast()
+import { useStore } from 'vuex'
+const store = useStore()
+const router = useRouter()
+const email = ref('')
+const password = ref('')
+const errors = ref({
+  email: '',
+  password: ''
+})
+
+const login = async () => {
+  try {
+    const validationErrors = validateSignInForm(email.value, password.value)
+
+    if (Object.values(validationErrors).every((error) => !error)) {
+      const credentials = {
+        email: email.value,
+        password: password.value
+      }
+      await store.dispatch('auth/login', credentials)
+      if (store.state.auth.isAuthenticated) {
+        $toast.open({
+          message: 'You have successfully logged in',
+          type: 'success',
+          position: 'top-right'
+        })
+        email.value = ''
+        password.value = ''
+        router.push('/')
+      }
+    } else {
+      errors.value = validationErrors
+    }
+  } catch (error) {
+    console.error('Error during login:', error)
+  }
+}
+</script>
 
 <template>
   <main>
@@ -7,7 +51,6 @@
         <div class="row">
           <div class="min-h-[980px] bg-white py-10 lg:col-6 lg:py-[114px]">
             <div class="mx-auto w-full max-w-[480px]">
-              <img class="mb-8" src="/images/flower.svg" alt="" />
               <h1 class="mb-4">Sing In</h1>
               <p>Donec sollicitudin molestie malesda sollitudin</p>
               <div class="signin-options mt-10">
@@ -21,7 +64,7 @@
                 <span class="relative z-[1] inline-block bg-white px-2">Or Sign In With Email</span>
               </div>
 
-              <form action="#">
+              <form @submit.prevent="login">
                 <div class="form-group">
                   <label for="email" class="form-label">Email Adrdess</label>
                   <input
@@ -29,6 +72,7 @@
                     id="email"
                     class="form-control"
                     placeholder="Your Email Address"
+                    v-model="email"
                   />
                 </div>
                 <div class="form-group mt-4">
@@ -38,12 +82,42 @@
                     id="password"
                     class="form-control"
                     placeholder="Your Password"
+                    v-model="password"
                   />
                 </div>
+                <!-- Display success message -->
+                <div
+                  v-if="store.state.auth.message"
+                  class="bg-green-500 text-white p-4 rounded-md my-4"
+                >
+                  <strong>Success:</strong> {{ store.state.auth.message }}
+                </div>
+                <!-- Display errors -->
+                <div
+                  v-if="store.state.auth.errors != null || store.state.auth.errors != ''"
+                  class="text-red-500 text-sm mt-4"
+                >
+                  <ul v-if="typeof store.state.auth.errors === 'string'">
+                    <!-- If error message is a string, display it directly -->
+                    <li class="font-bold">{{ store.state.auth.errors }}</li>
+                  </ul>
+                  <ul v-else>
+                    <!-- If error message is an array, display each item in the array -->
+                    <li
+                      v-for="(error, index) in store.state.auth.errors"
+                      :key="index"
+                      class="font-bold"
+                    >
+                      {{ error }}
+                    </li>
+                  </ul>
+                </div>
+
                 <input class="btn btn-primary mt-10 block w-full" type="submit" value="Sign In" />
                 <p class="mt-6 text-center">
                   Can't log in?
-                  <RouterLink class="text-dark" to="/sign-up">Sign up</RouterLink> for create account
+                  <RouterLink class="text-dark" to="/sign-up">Sign up</RouterLink> for create
+                  account
                 </p>
               </form>
             </div>

@@ -1,5 +1,52 @@
 <script setup lang="ts">
+import { validateSignUpForm } from '@/libs/validations/authValidation'
+import { ref } from 'vue'
 import { RouterLink } from 'vue-router'
+import { useStore } from 'vuex'
+
+const store = useStore()
+
+const name = ref('')
+const email = ref('')
+const password = ref('')
+const passwordConfirmation = ref('')
+const errors = ref({
+  name: '',
+  email: '',
+  password: '',
+  passwordConfirmation: ''
+})
+
+const signUp = async () => {
+  try {
+    const validationErrors = validateSignUpForm(
+      name.value,
+      email.value,
+      password.value,
+      passwordConfirmation.value
+    )
+
+    if (Object.values(validationErrors).every((error) => !error)) {
+      const credentials = {
+        name: name.value,
+        email: email.value,
+        password: password.value,
+        passwordConfirmation: passwordConfirmation.value
+      }
+      await store.dispatch('auth/register', credentials)
+      if (store.state.auth.isAuthenticated) {
+        name.value = ''
+        email.value = ''
+        password.value = ''
+        passwordConfirmation.value = ''
+      }
+    } else {
+      errors.value = validationErrors
+    }
+  } catch (error) {
+    console.error('Error during registration:', error)
+  }
+}
 </script>
 
 <template>
@@ -23,37 +70,84 @@ import { RouterLink } from 'vue-router'
                 <span class="relative z-[1] inline-block bg-white px-2">Or Sign Up With Email</span>
               </div>
 
-              <form action="#">
+              <form @submit.prevent="signUp">
                 <div class="form-group">
                   <label for="name" class="form-label">Full Name</label>
-                  <input type="text" id="name" class="form-control" placeholder="Your Full Name" />
+                  <input
+                    v-model="name"
+                    type="text"
+                    id="name"
+                    class="form-control"
+                    placeholder="Your Full Name"
+                  />
+                  <div v-if="errors.name" class="text-red-500 text-sm mt-1">{{ errors.name }}</div>
                 </div>
                 <div class="form-group mt-4">
                   <label for="email" class="form-label">Email Adrdess</label>
                   <input
+                    v-model="email"
                     type="email"
                     id="email"
                     class="form-control"
                     placeholder="Your Email Address"
                   />
+                  <div v-if="errors.email" class="text-red-500 text-sm mt-1">
+                    {{ errors.email }}
+                  </div>
                 </div>
                 <div class="form-group mt-4">
                   <label for="password" class="form-label">Password</label>
                   <input
+                    v-model="password"
                     type="password"
                     id="password"
                     class="form-control"
                     placeholder="Your Password"
                   />
+                  <div v-if="errors.password" class="text-red-500 text-sm mt-1">
+                    {{ errors.password }}
+                  </div>
                 </div>
                 <div class="form-group mt-4">
                   <label for="passwordConfirmation" class="form-label">Confirm Password</label>
                   <input
+                    v-model="passwordConfirmation"
                     type="password"
                     id="passwordConfirmation"
                     class="form-control"
                     placeholder="Confirmation"
                   />
+                  <div v-if="errors.passwordConfirmation" class="text-red-500 text-sm mt-1">
+                    {{ errors.passwordConfirmation }}
+                  </div>
+                </div>
+
+                <!-- Display success message -->
+                <div
+                  v-if="store.state.auth.message"
+                  class="bg-green-500 text-white p-4 rounded-md my-4"
+                >
+                  <strong>Success:</strong> {{ store.state.auth.message }}
+                </div>
+                <!-- Display errors -->
+                <div
+                  v-if="store.state.auth.errors != null || store.state.auth.errors != ''"
+                  class="text-red-500 text-sm mt-4"
+                >
+                  <ul v-if="typeof store.state.auth.errors === 'string'">
+                    <!-- If error message is a string, display it directly -->
+                    <li class="font-bold">{{ store.state.auth.errors }}</li>
+                  </ul>
+                  <ul v-else>
+                    <!-- If error message is an array, display each item in the array -->
+                    <li
+                      v-for="(error, index) in store.state.auth.errors"
+                      :key="index"
+                      class="font-bold"
+                    >
+                      {{ error }}
+                    </li>
+                  </ul>
                 </div>
                 <input class="btn btn-primary mt-10 block w-full" type="submit" value="Sign Up" />
               </form>
