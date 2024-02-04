@@ -31,11 +31,6 @@ export const logout = async () => {
 }
 
 export const whoami = async () => {
-  try {
-    const response = await api.get('/whoami')
-    return response.data
-  } catch (error) {
-    console.error('Error fetching user:', error)
-    throw error
-  }
+  const response = await api.get('/whoami')
+  return response.data
 }
