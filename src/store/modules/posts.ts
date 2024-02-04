@@ -35,6 +35,17 @@ const actions: ActionTree<PostsState, any> = {
     } catch (error) {
       console.error('Error fetching single post:', error)
     }
+  },
+  async createComment({ commit }, { postSlug, comment }) {
+    const { singlePost, createComment } = usePostsApi()
+    try {
+      await createComment(postSlug, comment)
+      console.log('singlePost.value 2:', singlePost.value);
+      
+      commit('setSinglePost', singlePost.value)
+    } catch (error) {
+      console.error('Error creating comment:', error)
+    }
   }
 }
 

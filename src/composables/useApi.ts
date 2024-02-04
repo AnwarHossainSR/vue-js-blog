@@ -41,7 +41,16 @@ export const usePostsApi = () => {
     }
   }
 
-  return { posts, fetchPosts, fetchSinglePost, singlePost }
+  const createComment = async (postSlug: string, commentText: string) => {
+    try {
+      const data = await apiService.createComment(postSlug, commentText)
+      singlePost.value = data.result
+    } catch (error) {
+      console.error('Error creating comment:', error)
+    }
+  }
+
+  return { posts, fetchPosts, fetchSinglePost, singlePost, createComment }
 }
 
 // auth API

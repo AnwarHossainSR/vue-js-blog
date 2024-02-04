@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { useStore } from 'vuex'
 
 interface Post {
   id: number
+  slug: string
   title: string
   image_path: any
   category: {
@@ -20,15 +21,19 @@ interface Post {
   comments: any[]
 }
 
+import { computed } from 'vue'
+
 const store = useStore()
+const isAuthenticated = computed(() => store.state.auth.isAuthenticated)
 const route = useRoute()
 const postData = ref<Post>()
+const commentText = ref('')
 
 onMounted(async () => {
   const slug = route.params.slug
   if (slug) {
     try {
-      await store.dispatch('posts/fetchSinglePost', slug)      
+      await store.dispatch('posts/fetchSinglePost', slug)
       postData.value = store.state.posts.singlePost
     } catch (error) {
       console.error('Error fetching data:', error)
@@ -37,6 +42,29 @@ onMounted(async () => {
     console.error('Invalid or missing "slug" parameter in the query.')
   }
 })
+
+// Watch for changes in store.state.posts.singlePost and update postData
+watch(
+  () => store.state.posts.singlePost,
+  (newSinglePost) => {
+    postData.value = newSinglePost
+  }
+)
+
+const submitForm = async () => {
+  if (isAuthenticated.value) {
+    const postSlug = postData?.value?.slug ?? ''
+    const comment = commentText.value
+    try {
+      await store.dispatch('posts/createComment', { postSlug, comment })
+    } catch (error) {
+      console.error('Error submitting comment:', error)
+    }
+  } else {
+    // Redirect to login page
+    // Example: router.push('/login')
+  }
+}
 </script>
 
 <template>
@@ -92,9 +120,9 @@ onMounted(async () => {
                 Comments
               </h3>
               <div
-                v-for="comment in postData?.comments"
-                :key="comment.id"
-                class="comment flex space-x-4 border-b border-border py-8"
+                v-for="item in postData?.comments"
+                :key="item.id"
+                class="comment flex-col space-x-4 border-b border-border py-8"
               >
                 <div class="comment flex space-x-4 border-b border-border py-8">
                   <img
@@ -103,19 +131,23 @@ onMounted(async () => {
                     alt=""
                   />
                   <div>
-                    <h4 class="font-primary text-lg font-medium capitalize">ronin bishop</h4>
+                    <h4 class="font-primary text-lg font-medium capitalize">
+                      {{ item.author.name }}
+                    </h4>
                     <p class="mt-2.5">
-                      April 18, 2020 at 6.25 pm
+                      {{ item.createdAt }}
                       <a class="ml-4 text-primary" href="#">Replay</a>
                     </p>
                     <p class="mt-5">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nec et ipsum
-                      ullamcorper venenatis fringilla. Pretium, purus eu nec vulputate vel habitant
-                      egestas.ornare ipsum
+                      {{ item.comment }}
                     </p>
                   </div>
                 </div>
-                <div class="comment flex space-x-4 py-8">
+                <div
+                  class="comment flex space-x-4 py-8"
+                  v-for="reply in item?.replies"
+                  :key="reply.id"
+                >
                   <img src="/images/icons/replay-arrow.svg" alt="" />
                   <img
                     src="/images/comment-author-2.png"
@@ -129,9 +161,7 @@ onMounted(async () => {
                       <a class="ml-4 text-primary" href="#">Replay</a>
                     </p>
                     <p class="mt-5">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nec et ipsum
-                      ullamcorper venenatis fringilla. Pretium, purus eu nec vulputate vel habitant
-                      egestas.ornare ipsum
+                      {{ reply.comment }}
                     </p>
                   </div>
                 </div>
@@ -141,33 +171,20 @@ onMounted(async () => {
                 <h6>No comments yet. Be the first to leave a comment</h6>
               </div>
             </div>
-            <form class="comment-form" action="#" method="POST">
+            <form class="comment-form" @submit.prevent="submitForm">
               <p class="mb-4">LEAVE A REPLAY</p>
               <div class="form-group">
-                <textarea cols="30" rows="10"></textarea>
-              </div>
-              <div class="row mb-8">
-                <div class="form-group mt-8 md:col-6 lg:col-4">
-                  <input type="text" placeholder="Name" />
-                </div>
-                <div class="form-group mt-8 md:col-6 lg:col-4">
-                  <input type="text" placeholder="Email" />
-                </div>
-                <div class="form-group mt-8 md:col-6 lg:col-4">
-                  <input type="text" placeholder="Website" />
-                </div>
-              </div>
-              <div class="form-group relative flex pl-6">
-                <input class="absolute left-0 top-1" type="checkbox" id="save-info" />
-                <label class="block" for="save-info"
-                  >Save my name, email, and website in this browser for the next time I
-                  comment.</label
-                >
+                <textarea cols="30" rows="10" v-model="commentText"></textarea>
               </div>
               <input
-                type="Submit"
-                class="btn btn-primary mt-8 min-w-[189px] cursor-pointer"
-                value="Post Comment"
+                type="submit"
+                :class="{
+                  btn: true,
+                  'btn-primary': isAuthenticated,
+                  'btn-disabled': !isAuthenticated
+                }"
+                :value="isAuthenticated ? 'Post Comment' : 'Login to Comment'"
+                :disabled="!isAuthenticated"
               />
             </form>
           </div>
@@ -178,3 +195,11 @@ onMounted(async () => {
     <!-- ./end blog-single -->
   </main>
 </template>
+
+<style scoped>
+/* Add your button styling here, e.g., btn-disabled styles */
+.btn-disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+</style>

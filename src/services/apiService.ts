@@ -2,7 +2,7 @@ import { api } from './index'
 
 export const fetchCategories = async () => {
   try {
-    const response = await api.get('/categories')    
+    const response = await api.get('/categories')
     return response.data
   } catch (error) {
     console.error('Error fetching categories:', error)
@@ -26,6 +26,16 @@ export const fetchSinglePost = async (slug: string) => {
     return response.data
   } catch (error) {
     console.error('Error fetching single post:', error)
+    throw error
+  }
+}
+
+export const createComment = async (postSlug: string, commentText: string) => {
+  try {
+    const response = await api.post(`/posts/${postSlug}/comments`, { comment: commentText })
+    return response.data
+  } catch (error) {
+    console.error('Error creating comment:', error)
     throw error
   }
 }
