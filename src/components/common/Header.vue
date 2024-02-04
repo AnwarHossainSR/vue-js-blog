@@ -1,7 +1,10 @@
 <script setup lang="ts">
-import imageUrl from '@/assets/images/logo.svg';
-import { RouterLink, useRoute, useRouter } from 'vue-router';
-import { useStore } from 'vuex';
+import imageUrl from '@/assets/images/logo.svg'
+import { RouterLink, useRoute, useRouter } from 'vue-router'
+import { useToast } from 'vue-toast-notification'
+import 'vue-toast-notification/dist/theme-sugar.css'
+import { useStore } from 'vuex'
+const $toast = useToast()
 const route = useRoute()
 const router = useRouter()
 const store = useStore()
@@ -10,6 +13,11 @@ const isActive = (to: string): boolean => route.path === to
 
 const handleLogout = async () => {
   await store.dispatch('auth/logout')
+  $toast.open({
+    message: 'You have successfully logged out',
+    type: 'success',
+    position: 'top-right'
+  })
   router.push('/')
 }
 </script>

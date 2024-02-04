@@ -2,11 +2,12 @@
 import { validateSignInForm } from '@/libs/validations/authValidation'
 import { ref } from 'vue'
 import { RouterLink, useRouter } from 'vue-router'
+import { useToast } from 'vue-toast-notification'
+import 'vue-toast-notification/dist/theme-sugar.css'
+const $toast = useToast()
 import { useStore } from 'vuex'
-
 const store = useStore()
 const router = useRouter()
-
 const email = ref('')
 const password = ref('')
 const errors = ref({
@@ -25,6 +26,11 @@ const login = async () => {
       }
       await store.dispatch('auth/login', credentials)
       if (store.state.auth.isAuthenticated) {
+        $toast.open({
+          message: 'You have successfully logged in',
+          type: 'success',
+          position: 'top-right'
+        })
         email.value = ''
         password.value = ''
         router.push('/')
@@ -97,7 +103,11 @@ const login = async () => {
                   </ul>
                   <ul v-else>
                     <!-- If error message is an array, display each item in the array -->
-                    <li v-for="(error, index) in store.state.auth.errors" :key="index" class="font-bold">
+                    <li
+                      v-for="(error, index) in store.state.auth.errors"
+                      :key="index"
+                      class="font-bold"
+                    >
                       {{ error }}
                     </li>
                   </ul>
