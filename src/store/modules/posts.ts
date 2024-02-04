@@ -41,7 +41,7 @@ const actions: ActionTree<PostsState, any> = {
     try {
       await createComment(postSlug, comment)
       console.log('singlePost.value 2:', singlePost.value);
-      
+
       commit('setSinglePost', singlePost.value)
     } catch (error) {
       console.error('Error creating comment:', error)
