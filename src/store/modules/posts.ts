@@ -39,7 +39,7 @@ const actions: ActionTree<PostsState, any> = {
   async createComment({ commit }, { postSlug, comment }) {
     const { singlePost, createComment } = usePostsApi()
     try {
-      await createComment(postSlug, comment)      
+      await createComment(postSlug, comment)
       commit('setSinglePost', singlePost.value)
     } catch (error) {
       console.error('Error creating comment:', error)
