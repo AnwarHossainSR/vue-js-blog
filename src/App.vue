@@ -12,7 +12,6 @@ watch(
   () => store.state.auth.isAuthenticated,
   (isAuthenticated) => {
     if (isAuthenticated && localStorage.getItem('token')) {
-      console.log('User is authenticated')
       axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('token')}`
     }
   }
