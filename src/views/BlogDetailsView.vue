@@ -57,6 +57,8 @@ const submitForm = async () => {
     const comment = commentText.value
     try {
       await store.dispatch('posts/createComment', { postSlug, comment })
+      // Clear the comment text area
+      commentText.value = ''
     } catch (error) {
       console.error('Error submitting comment:', error)
     }
